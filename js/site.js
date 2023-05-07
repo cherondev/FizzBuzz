@@ -1,63 +1,150 @@
-//Get from values from the user
-//Starts or controller function
+//Get from values from the user. We need to get the fizz vand the buzz values.
 function getValues() {
-	//Get values from the page
-	let startValue = document.getElementById("startValue").value;
-	let endValue = document.getElementById("endValue").value;
+	//Get user values from the page
+	let fizzValue = document.getElementById("fizzValue").value;
+	let buzzValue = document.getElementById("buzzValue").value;
 
-	//We need to validate our input
-	//Parse into integer
-	startValue = parseInt(startValue);
-	endValue = parseInt(endValue);
+	//Check for numbers (Parse into integer)
+	fizzValue = parseInt(fizzValue);
+	buzzValue = parseInt(buzzValue);
 
-	if (Number.isInteger(startValue) && Number.isInteger(endValue)) {
-		//Call generateNumbers
-		let numbers = generateNumbers(startValue, endValue);
-		//We call displayNumbers
-		displayNumbers(numbers);
+	//Check that the numbers are integers
+	if (Number.isInteger(fizzValue) && Number.isInteger(buzzValue)) {
+
+		//Call fizzBuzz function
+		let fbArray = fizzBuzz(fizzValue, buzzValue);
+		//let fbArray = fizzBuzzSwitch(fizzValue, buzzValue);
+		//let fbArray = fizzBuzzTernary(fizzValue, buzzValue);
+
+		//Take return from fixxBuzz and call displayData function and write values to screen
+		displayData(fbArray);
 	} else {
 		alert("You must enter an integer");
 	}
 }
 
-//Generate numbers from startValue to the endValue
+//Generate numbers from fizzValue to the buzzValue
 //Logic function(s)
-function generateNumbers(sValue, eValue) {
-	let numbers = [];
+function fizzBuzz(fizzValue, buzzValue) {
+	//Initialize array
+	let returnArray = [];
 
-	//We want to get all numbers from start to end
-	for (let index = sValue; index <= eValue; index++) {
-		//This will execute in a loop until index = eValue
-		numbers.push(index);
+	//Loop from 1 to 100
+	for (let i = 1; i <= 100; i++) {
+
+		//check to see if divisible by both 3 and 5
+		//check t see if divisible by fizz value 3
+		//check t see if divisible by buzz value 5
+		if (i % fizzValue == 0 && i % buzzValue == 0) {
+			returnArray.push("FizzBuzz");
+		} else if (i % fizzValue == 0) {
+			returnArray.push("Fizz");
+		} else if (i % buzzValue == 0) {
+			returnArray.push("Buzz");
+		} else {
+			returnArray.push(i);
+		}
 	}
-	return numbers;
+	//Return the array
+	return returnArray;
 }
 
-//Display the numbers and mark even numbers bold.
-//Displays or view functions
-function displayNumbers(numbers) {
-	let templateRows = "";
+function fizzBuzzSwitch(fizzValue, buzzValue) {
 
-	for (let index = 0; index < numbers.length; index++) {
-		let number = numbers[index];
-		//My solution which works perfectly
+	let returnArray = [];
+	let Fizz = false;
+	let Buzz = false;
 
-		//if (number % 2 == 0) {
-		//	templateRows += `<tr><td><strong>${number}</strong></td></tr>`;
-		//} else {
-		//	templateRows += `<tr><td>${number}</td></tr>`;
-      //}
-      
-      //Bobby Davis' solution which adds additional complexity but is good to know
-      let className = "even";
-      
-      if (number % 2 == 0) {
-         className = "even";
-      } else {
-         className = "odd";
-      }
-      templateRows += `<tr><td class="${className}">${number}</td></tr>`;
+	for (let i = 1; i <= 100; i++) {
+		
+		Fizz = i % fizzValue == 0;
+		Buzz = i % buzzValue == 0;
+		
+		switch(true)
+		{
+			case Fizz && Buzz:{
+				returnArray.push("FizzBuzz");
+				break;
+			}
+			case Fizz:{
+				returnArray.push("Fizz");
+				break;
+			}
+			case Buzz:{
+				returnArray.push("Buzz");
+				break;
+			}
+			default:{
+				returnArray.push(i);
+				break;
+			}
+		}
+	}
+	return returnArray;
+}
+
+function fizzBuzzTernary(fizzValue, buzzValue) {
+
+	let returnArray = [];
+
+	for (let i = 1; i <= 100; i++) {
+		//A ternary operator evaluates true/false
+		let value = ((i % fizzValue == 0 ? "Fizz" : "") + (i % buzzValue == 0 ? "Buzz" : "") || i);
+		returnArray.push(value);
+	}
+	return returnArray;
+}
+
+
+
+
+//Display function
+function displayData(fbArray) {
+
+	//get the table body element from the page
+	let tableBody = document.getElementById("results");
+
+	//get the templage row
+	let templateRow = document.getElementById("fbTemplate");
+
+	//clear table first
+	tableBody.innerHTML = "";
+
+	for (let index = 0; index < fbArray.length; index += 5) {
+		
+		let tableRow = document.importNode(templateRow.content, true);
+
+		//grab just the TDs and put them into an array
+		let rowCols = tableRow.querySelectorAll("td");
+
+		rowCols[0].classList.add(fbArray[index]);
+		rowCols[0].textContent = fbArray[index];
+
+		rowCols[1].classList.add(fbArray[index + 1]);
+		rowCols[1].textContent = fbArray[index + 1];
+		
+		rowCols[2].classList.add(fbArray[index + 2]);
+		rowCols[2].textContent = fbArray[index + 2];
+		
+		rowCols[3].classList.add(fbArray[index + 3]);
+		rowCols[3].textContent = fbArray[index + 3];
+		
+		rowCols[4].classList.add(fbArray[index + 4]);
+		rowCols[4].textContent = fbArray[index + 4];
+		
+		tableBody.appendChild(tableRow);
 	}
 
-	document.getElementById("results").innerHTML = templateRows;
+	//loop over the array and create a tablerow for each item.
+	//*************** The Traditional way to output the data ***************
+	// let tableRows = "";
+	
+	// for (let i = 0; i < fbArray.length; i++) {
+	// 	let fbValues = fbArray[i];
+	// 	tableRows += `<tr><td>${fbValues}</td></tr>`;
+	// }
+	// document.getElementById("results").innerHTML = tableRows;
+	
+	//***************End the Traditional way to output the data ***************
+
 }

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" class="h-100">
 	<head>
-		<title>LOOPS: A Coding Project by CHeron</title>
+		<title>FIZZ BUZZ: A Coding Project by CHeron</title>
 		<!-- Required meta tags -->
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
@@ -24,7 +24,7 @@
 		<nav class="navbar navbar-expand-md navbar-dark fixed-top">
 			<div class="container-fluid">
 				<a class="navbar-brand" href="/index.html"><img
-						src="img/favicon_io/favicon-32x32.png" alt="Norech Tech Logo" class="d-inline-block align-text-top" width="30" height="24" /> LOOPS</a>
+						src="img/favicon_io/favicon-32x32.png" alt="Norech Tech Logo" class="d-inline-block align-text-top" width="30" height="24" /> FIZZ BUZZ</a>
 				<button
 					class="navbar-toggler"
 					type="button"
@@ -59,116 +59,138 @@
 		<!-- === Main Section === -->
 		<main class="flex-shrink-0">
          <div class="container py-4 px-5 mt-5">
-				<h2 class="norder-1 border-bottom border-dark">The Code for LOOPS</h2>
+				<h2 class="norder-1 border-bottom border-dark">The Code for FIZZ BUZZ</h2>
 				<div class="row row-cols-1 row-cols-lg-2">
 					<div class="col-lg-8">
 						<pre class="line-numbers">
 							<code class="language-javascript">
-								//Get from values from the user
-		//Starts or controller function
-		function getValues() {
-			//Get values from the page
-			let startValue = document.getElementById("startValue").value;
-			let endValue = document.getElementById("endValue").value;
+								//Get from values from the user. We need to get the fizz vand the buzz values.
+								function getValues() {
+									//Get user values from the page
+									let fizzValue = document.getElementById("fizzValue").value;
+									let buzzValue = document.getElementById("buzzValue").value;
 
-			//We need to validate our input
-			//Parse into integer
-			startValue = parseInt(startValue);
-			endValue = parseInt(endValue);
+									//Check for numbers (Parse into integer)
+									fizzValue = parseInt(fizzValue);
+									buzzValue = parseInt(buzzValue);
 
-			if (Number.isInteger(startValue) && Number.isInteger(endValue)) {
-				//Call generateNumbers
-				let numbers = generateNumbers(startValue, endValue);
-				//We call displayNumbers
-				displayNumbers(numbers);
-			} else {
-				alert("You must enter an integer");
-			}
-		}
+									//Check that the numbers are integers
+									if (Number.isInteger(fizzValue) && Number.isInteger(buzzValue)) {
 
-		//Generate numbers from startValue to the endValue
-		//Logic function(s)
-		function generateNumbers(sValue, eValue) {
-			let numbers = [];
+										//Call fizzBuzz function
+										let fbArray = fizzBuzz(fizzValue, buzzValue);
 
-			//We want to get all numbers from start to end
-			for (let index = sValue; index <= eValue; index++) {
-				//This will execute in a loop until index = eValue
-				numbers.push(index);
-			}
-			return numbers;
-		}
+										//Take return from fixxBuzz and call displayData function and write values to screen
+										displayData(fbArray);
+									} else {
+										alert("You must enter an integer");
+									}
+								}
 
-		//Display the numbers and mark even numbers bold.
-		//Displays or view functions
-		function displayNumbers(numbers) {
-			let templateRows = "";
+								//Generate numbers from fizzValue to the buzzValue
+								//Logic function(s)
+								function fizzBuzz(fizzValue, buzzValue) {
+									//Initialize array
+									let returnArray = [];
 
-			for (let index = 0; index < numbers.length; index++) {
-				let number = numbers[index];
-				//My solution which works perfectly
+									//Loop from 1 to 100
+									for (let i = 1; i <= 100; i++) {
 
-				//if (number % 2 == 0) {
-				//	templateRows += `<tr><td><strong>${number}</strong></td></tr>`;
-				//} else {
-				//	templateRows += `<tr><td>${number}</td></tr>`;
-				//}
-				
-				//Bobby Davis' solution which adds additional complexity but is good to know
-				let className = "even";
-				
-				if (number % 2 == 0) {
-					className = "even";
-				} else {
-					className = "odd";
-				}
-				//This does not render correctly with Prism. Using equivalent escape charactersfor "<" and "&" to make it work.
-				//templateRows += `<tr><td class="${className}">${number}</td></tr>`;
-				templateRows += `&lt;tr>&lt;td class="${className}" >${number}&lt;/td>&lt;/tr>
-			}
+										//check to see if divisible by both 3 and 5
+										//check t see if divisible by fizz value 3
+										//check t see if divisible by buzz value 5
+										if (i % fizzValue == 0 && i % buzzValue == 0) {
+											returnArray.push("FizzBuzz");
+										} else if (i % fizzValue == 0) {
+											returnArray.push("Fizz");
+										} else if (i % buzzValue == 0) {
+											returnArray.push("Buzz");
+										} else {
+											returnArray.push(i);
+										}
+									}
+									//Return the array
+									return returnArray;
+								}
+								//Display function
+								function displayData(fbArray) {
 
-			document.getElementById("results").innerHTML = templateRows;
-		}
+									//get the table body element from the page
+									let tableBody = document.getElementById("results");
 
-									</code>
-								</pre>
+									//get the templage row
+									let templateRow = document.getElementById("fbTemplate");
+
+									//clear table first
+									tableBody.innerHTML = "";
+
+									for (let index = 0; index < fbArray.length; index += 5) {
+										
+										let tableRow = document.importNode(templateRow.content, true);
+
+										//grab just the TDs and put them into an array
+										let rowCols = tableRow.querySelectorAll("td");
+
+										rowCols[0].classList.add(fbArray[index]);
+										rowCols[0].textContent = fbArray[index];
+
+										rowCols[1].classList.add(fbArray[index + 1]);
+										rowCols[1].textContent = fbArray[index + 1];
+										
+										rowCols[2].classList.add(fbArray[index + 2]);
+										rowCols[2].textContent = fbArray[index + 2];
+										
+										rowCols[3].classList.add(fbArray[index + 3]);
+										rowCols[3].textContent = fbArray[index + 3];
+										
+										rowCols[4].classList.add(fbArray[index + 4]);
+										rowCols[4].textContent = fbArray[index + 4];
+										
+										tableBody.appendChild(tableRow);
+									}
+								}
+
+							</code>
+						</pre>
 							</div>
 							<div class="col-lg-4">
-								<h5>LOOPS</h5>
-								<p>Loops is an app that loops through a series of numbers based on the Start and End numeric values entered by a user. The code contains three functions.</p>
+								<h5>FIZZ BUZZ</h5>
+								<p>Fizz Buzz is an app that displays each number from 1 to 100.For each multiple of 3, display "<strong>Fizz</strong>" instead of the number. For each multiple of 5, display "<strong>Buzz</strong>" instead of the number. For numbers which are multiples of both 3 and 5, display "<strong>FizzBuzz</strong>" instead of the number.</p>
 								<h5>Function: getValues()</h5>
 									<p><ol>
-										<li>This function gets the starting and ending values from a user.</li>
+										<li>This function gets the fizz and buzz values from the user.</li>
 										<li>The values are then parsed into an Integer, then validated to ensure they are numeric by using the <strong>Numeric</strong> property of the <strong>isInteger</strong> method.</li>
-										<li>If the values are numeric, the generateNumbers() function is called.</li>
-										<li>Then, displayNumbers() function is called.</li>
+										<li>If the values are numeric, the fizzBuzz() function is called with two parameters (fizzValue and buzzValue) which are passed to the fizzBuzz() function. These parameters contain the input values from the user</li>
+										<li>Then, displayData() function is called. This function will display the output on the screen.</li>
 										<li>If not, an alert is generated with the message, "You must enter an integer.</li>
 										</ol>
 									</p>
-									<h5>Function: generateNumbers()</h5>
+									<h5>Function: fizzBuzz()</h5>
 									<p><ol>
-										<li>This function is initiated with two arguments, sValue and eValue.</li>
-										<li>Then, an empty array is initiated called numbers.</li>
-										<li>Next, a for loop is is used to loop to evaluate the Start and End values from the user. Index is initialized to sValue in the first part of the for loop condition.</li>
-										<li>In the second part of the for loop condition, the loop will run until index is <= eValue.</li>
-										<li>Then, in the 3rd part of the for loop condition, index increments by 1 each time through the loop.</li>
-										<li>The Block part of he funcion assigns the value of index to the numbers array each time through the loop.</li>
-										<li>Finally, the numbers array is returned abd passed to the displayNumbers() function.</li>
+										<li>This function is initiated with two arguments, fizzValue and buzzValue.</li>
+										<li>An empty array is initiated called returnArray.</li>
+										<li>A for loop is used to loop throught the number 1 to 100.</li>
+										<li>Each time through teh loop, an <strong>if</strong> statement checks to see if both fizzValue and buzzValue are divisible by 3 and 5 or by the numbers entered by the user. If that check evaluaes to a remainder of zero(0), the word "FizzBuzz" is pushed into the array called returnArray.</li>
+
+										<li>An <strong>else if</strong> statement checks to see if fizzValue is divisible by 3.  If that check evaluaes to a remainder of zero(0), the word "Fizz" is pushed into the array called returnArray.</li>
+										<li>A second <strong>else if</strong> statement checks to see if buzzValue is divisible by 5.  If that check evaluaes to a remainder of zero(0), the word "Buzz" is pushed into the array called returnArray.</li>
+
+										<li>Lastly, if none of those conditions checks out, an <strong>else</strong> statement is used to pushed everything else into the array called returnArray.</li>
+
+										<li>Finally, the array is returned and passed to the displayData() function with the parameter, fbArray.</li>
 										</ol>
 									</p>
-									<h5>Function: displayNumbers()</h5>
+									<h5>Function: displayData()</h5>
 									<p><ol>
-											<li>The job of this function is to display the numbers on the screen according teh the specifications.</li>
-											<li>The function is implemented with an argument. The argument takes the numbers array which was returned via the generateNumbers() function.</li>
-											<li>The variable templateRows is initiated with an empty string. This will be used to write out each row of numbers to the page in a table.</li>
-											<li>A for loop is used to loop through the numbers array and then assign each individual number to a variable called <strong>number</strong>.</li>
-											<li>Each individual number from the numbers array is assigned to templateRows using a template literal.</li>
-											<li>Likewise, to BOLD each even number per the specification, a className variable is created and assigned the string, "even".</li>
-											<li>To identify the even numbers, each individual number is divided by 2 using the modulus operator which returns a remainder.</li>
-											<li>If the remainder equals 0, "even" is assigned is assigned to className, else, "odd" is assigned.</li>
-											<li>The variable className is also assigned to templateRows using a template literal.Specifically, it is assigned as a class in the <td> tag of the table row.</li>
-											<li>In the site.css file, the font-weight for the odd and even classes are styled appropriately: even is bolded and odd is set to 100 or normal.</li>
-											<li>Finally, to write out the table in the HTML document, the getElementById property of the DOM is used to populate the innerHTML identified by the id "results" with templateRows. This is the variable containing all the individual numbers along with the class name of odd or even so they can be bolded or not.</li>
+											<li>The function is implemented with an argument. The argument takes fbArray which was returned via the fizzBuzz() function.</li>
+											<li>The tableBody and templateRow variables are initiated by retrieving the respective "results" and "fbTemplate" elements from the page</li>
+											<li>The table is first cleared by setting it to blank.</li>
+											<li>A for loop is used to loop through the fbArray and increment it by 5.</li>
+											<li>The content in the template is retrieved via the document.importNode() medthod and assigned to tableRow. </li>
+											<li>The table data (TDs) are extrated and assigned to an array called rowCols.</li>
+											<li>The for loop cycles through the fbArray and assigns 5 records at a time to rowCols array.</li>
+											<li>Likewise, the classList() method is used to add any CSS class to the TD tag each time through the array.</li>
+											<li>Finally, the tableBody.appendChild() method is used to output the tableRow data to the screen.</li>
 										</ol>
 									</p>
 					</div>

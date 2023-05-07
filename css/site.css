@@ -3,6 +3,9 @@
    --secondary-color: #ff993b;
    --dark-color: #292929;
    --white-color: #e7e7e7;
+   --page-color: #FBFBF9;
+   --checklist-color: #D03300;
+   --header-footer-color: #17609d;
 }
 
 /*Google Fonts*/
@@ -24,7 +27,52 @@ cite {
    font-size: large;
    color: red;
  }
+/* My styles */
+ol > li{
+   padding-bottom: .5em;
+}
 
+ .page-color{
+   background-color: var(--page-color);
+ }
+
+ .page-title{
+   color: #17609d;
+ }
+
+ .checklist > li i{
+   color: var(--checklist-color);
+}
+/* FizzBuzz colors */
+.Fizz{
+   color: orange;
+}
+
+.Buzz{
+   color: blue;
+}
+
+.FizzBuzz{
+   color: red;
+   font-weight: bold;
+}
+/* Icon colors */
+.bsicon{
+   color: #8312FA;
+}
+
+.jsicon{
+   color: #F0DB4F;
+}
+
+.html5icon{
+   color: #E44D26;
+}
+
+.css3icon{
+   color: #0A71B8;
+}
+/* End My styles */
 body{
    color: var(--dark-color);
 }
@@ -52,26 +100,6 @@ footer .social>a{
 
 footer .social>a:hover{
    opacity: 0.9;
-   color: var(--secondary-color);
-}
-
-.bsicon{
-   color: #8312FA;
-}
-
-.jsicon{
-   color: #F0DB4F;
-}
-
-.html5icon{
-   color: #E44D26;
-}
-
-.css3icon{
-   color: #0A71B8;
-}
-
-.checklist > li i{
    color: var(--secondary-color);
 }
 
