@@ -1,2 +1,2 @@
-# JsSiteTemplate
-Website template for JS Projects
+# Fizz Buzz App
+
