@@ -45,16 +45,16 @@ ol > li{
 }
 /* FizzBuzz colors */
 .Fizz{
-   color: orange;
+   color: orange !important;
 }
 
 .Buzz{
-   color: blue;
+   color: blue !important;
 }
 
 .FizzBuzz{
-   color: red;
-   font-weight: bold;
+   color: red !important;
+   font-weight: bold !important;
 }
 /* Icon colors */
 .bsicon{
